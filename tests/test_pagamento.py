@@ -17,7 +17,6 @@ def test_processar_compra_aprovada(mocker):
     
     assert resultado == "Sucesso! Transação INGRESSO-998877 confirmada."
 
-
 def test_processar_compra_recusada_sem_limite(mocker):
     """
     Desafio 2: Testa o fluxo onde o cartão é recusado por falta de limite.
