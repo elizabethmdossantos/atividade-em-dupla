@@ -1,5 +1,6 @@
 import pytest
 import requests
+from requests.exceptions import Timeout
 from src.pagamento import processar_compra
 
 def test_processar_compra_aprovada(mocker):
