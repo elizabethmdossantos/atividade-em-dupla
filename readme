@@ -1,0 +1,66 @@
+# Sistema de Processamento de Pagamentos com Testes de Integração (Mocks)
+
+Este repositório contém um módulo de processamento de pagamentos em Python (`pagamento.py`) integrado a uma API de gateway externa simulada. O foco principal deste projeto é demonstrar a aplicação de testes unitários e de integração robustos utilizando a técnica de **Mocking** com `pytest-mock`.
+
+A estratégia de mock foi desenhada para isolar o código de produção, garantindo que nenhuma requisição HTTP real seja feita para o gateway de pagamentos (`api.pagarapido.com.br`), evitando cobranças indevidas ou dependência de rede durante os testes.
+
+---
+
+## 🛠️ Tecnologias e Dependências
+
+* **Linguagem:** Python 3.x
+* **Framework de Testes:** `pytest`
+* **Plugin de Mocking:** `pytest-mock` (via fixture `mocker`)
+* **Cliente HTTP:** `requests`
+
+---
+
+## 🏗️ Arquitetura do Projeto
+
+O projeto está estruturado da seguinte forma:
+
+```text
+├── src/
+│   └── pagamento.py      # Lógica de negócio e integração com a API do gateway
+└── tests/
+    └── test_pagamento.py # Suite de testes automatizados com mocks
+```
+
+## 📐 Estrutura dos Casos de TesteA suíte de testes cobre três cenários críticos de negócio, garantindo a resiliência da aplicação desde o "Caminho Feliz" até falhas severas de infraestrutura (como quedas em eventos de alta demanda tipo Black Friday).
+| Caso de Teste / Desafio | Alvo do Mock | Comportamento Simulado | Resultado Esperado |
+| :--- | :---| :--- | :--- |
+| **1. Compra Aprovada** | ``src.pagamento.enviar_para_gateway`` | Retorna dicionário com ``status: "aprovado"`` e ID da transação. | Mensagem de sucesso contendo o código da transação.`|
+| **2. Cliente Sem Limite** | ``src.pagamento.enviar_para_gateway`` | Retorna dicionário com ``status: "recusado"`` e o motivo "Saldo insuficiente". | Mensagem informando a recusa e o motivo específico amigável.|
+| **3. Cenário Black Friday** | ``src.pagamento.requests.post`` | Lança a exceção física de rede ``requests.exceptions. Timeout.`` | Mensagem de segurança orientando o usuário a verificar a fatura.|
+
+## 🚀 Como Instalar e Executar o Projeto
+Siga os passos abaixo para clonar o repositório, configurar o ambiente e rodar os testes localmente.
+
+1. Clonar o Repositório
+````Bash
+git clone [https://github.com/seu-usuario/nome-do-repositorio.git](https://github.com/seu-usuario/nome-do-repositorio.git)
+
+cd nome-do-repositorio
+````
+
+2. Configurar o Ambiente Virtual (Opcional, mas recomendado)
+````Bash
+# No Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
+
+# No Windows
+python -m venv venv
+.\venv\Scripts\activate
+````
+
+3. Instalar as Dependências
+````Bash
+pip install requests pytest pytest-mock
+````
+4. Executar os Testes
+Para rodar a suite de testes de forma detalhada (modo verboso), execute:
+
+````Bash
+pytest -v
+````
