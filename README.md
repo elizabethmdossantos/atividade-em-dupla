@@ -44,7 +44,7 @@ git clone [https://github.com/elizabethmdossantos/atividade-em-dupla.git](https:
 cd atividade-em-dupla
 ````
 
-2. Configurar o Ambiente Virtual (Opcional, mas recomendado)
+2. Configurar o Ambiente Virtual
 ````Bash
 
 # No Windows
